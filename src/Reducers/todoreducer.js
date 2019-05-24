@@ -1,4 +1,5 @@
 import {ADD_TASK, HIDE_TASK,COMPLETE_TASK, DELETE_TASK, UNHIDE_ALL_TASKS} from '../Actions';
+import moment from 'moment';
 
 const initialState = {
     toDoList: [
@@ -15,13 +16,15 @@ export const todoreducer = (state = initialState, action) => {
     // console.log("reducer action", action)
     switch (action.type) {
         case ADD_TASK:
+            var now = moment().format();
+            console.log(now);
             return {
                 toDoList: [...state.toDoList, {
                         task:action.payload,
                         id: state.nextID,
                         completed: false,
                         hidden: false,
-                        next_update_date: "",
+                        next_update_date: now,
                     }],
                 nextID: state.nextID + 1
             };

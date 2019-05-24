@@ -36,8 +36,10 @@ class ToDoList extends React.Component {
                 <button onClick={this.unhideAllTasks}>(show all hidden tasks)</button>
                 <h4>things to do</h4>
                 {unhiddenToDoList.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
-                <input onChange={this.handleChanges} value={this.state.newTask} />
-                <button onClick={this.addTask}>Add Task</button>
+                <form onSubmit={this.addTask}>
+                    <input onChange={this.handleChanges} value={this.state.newTask} />
+                    <button>Add Task</button>
+                </form>
             </div>
         )
     }

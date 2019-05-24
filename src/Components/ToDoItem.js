@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { hideTask, completeTask, deleteTask } from '../Actions';
+import moment from 'moment';
 
 class ToDoItem extends React.Component {
     hideTask = e => {
@@ -23,7 +24,7 @@ class ToDoItem extends React.Component {
         return (
             <div>
                 <p>{this.props.todo.task}</p> 
-                <p>{this.props.todo.time_expectation}</p>
+                <p>{moment(this.props.todo.next_update_date).to(moment())}</p>
                 <button onClick={this.hideTask}>Hide</button>
                 <button onClick={this.completeTask}>Complete</button>
             </div>
