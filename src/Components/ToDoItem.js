@@ -2,7 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { hideTask, completeTask, deleteTask } from '../Actions';
 import moment from 'moment';
+import styled from 'styled-components'
+
 import PushTaskForm from './PushTaskForm';
+
+const TaskDiv = styled.div`
+    color:red
+    display:flex
+    `
 
 class ToDoItem extends React.Component {
 
@@ -24,13 +31,13 @@ class ToDoItem extends React.Component {
 
     render() {
         return (
-            <div>
+            <TaskDiv>
                 <p>{this.props.todo.task}</p> 
                 <p>{moment(this.props.todo.next_update_date).to(moment())}</p>
                 <PushTaskForm id={this.props.todo.id}/>
                 <button onClick={this.hideTask}>Hide</button>
                 <button onClick={this.completeTask}>Complete</button>
-            </div>
+            </TaskDiv>
         )
     }
 };
