@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { hideTask, completeTask, deleteTask } from '../Actions';
 import moment from 'moment';
+import PushTaskForm from './PushTaskForm';
 
 class ToDoItem extends React.Component {
+
     hideTask = e => {
         e.preventDefault();
         this.props.hideTask(this.props.todo.id);
@@ -25,6 +27,7 @@ class ToDoItem extends React.Component {
             <div>
                 <p>{this.props.todo.task}</p> 
                 <p>{moment(this.props.todo.next_update_date).to(moment())}</p>
+                <PushTaskForm id={this.props.todo.id}/>
                 <button onClick={this.hideTask}>Hide</button>
                 <button onClick={this.completeTask}>Complete</button>
             </div>
@@ -33,3 +36,7 @@ class ToDoItem extends React.Component {
 };
 
 export default connect(null, { hideTask, completeTask, deleteTask })(ToDoItem)
+
+
+
+

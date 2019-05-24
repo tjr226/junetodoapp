@@ -1,4 +1,4 @@
-import {ADD_TASK, HIDE_TASK,COMPLETE_TASK, DELETE_TASK, UNHIDE_ALL_TASKS} from '../Actions';
+import {ADD_TASK, HIDE_TASK,COMPLETE_TASK, DELETE_TASK, UNHIDE_ALL_TASKS, PUSH_TASK} from '../Actions';
 import moment from 'moment';
 
 const initialState = {
@@ -50,6 +50,17 @@ export const todoreducer = (state = initialState, action) => {
         case UNHIDE_ALL_TASKS:
             return {
                 toDoList: state.toDoList.map(todo => todo = {...todo, hidden: false})
+            }
+        case PUSH_TASK:
+            console.log("pushtask payload is", action.payload)
+            return {
+                ...state,
+                toDoList: state.toDoList.map(todo => todo.id === action.payload.taskID ?
+                    {...todo, 
+                        next_update_date: moment().subtract(action.payload.timeToPush.hoursToPush, 'hours').subtract( 
+                            action.payload.timeToPush.daysToPush, 'days')
+                     } :
+                    todo)
             }
         default:
             return state;

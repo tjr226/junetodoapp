@@ -33,13 +33,13 @@ class ToDoList extends React.Component {
         return (
             <div>
                 <h2>ToDoList</h2>
-                <button onClick={this.unhideAllTasks}>(show all hidden tasks)</button>
-                <h4>things to do</h4>
-                {unhiddenToDoList.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
                 <form onSubmit={this.addTask}>
                     <input onChange={this.handleChanges} value={this.state.newTask} />
                     <button>Add Task</button>
                 </form>
+                <h4>things to do</h4>
+                <button onClick={this.unhideAllTasks}>(show all hidden tasks)</button>                
+                {unhiddenToDoList.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
             </div>
         )
     }
