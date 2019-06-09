@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { completeTask } from '../Actions';
 import moment from 'moment';
 import styled from 'styled-components'
+import PushTask from './PushTask';
 
 const TaskDiv = styled.div`
     display:flex;
     flex-direction:column;
-    width: 300px;
     `
 
 const TaskText = styled.p`
@@ -19,24 +19,36 @@ const TaskButtonsDiv = styled.div`
 `
 
 class ToDoItem extends React.Component {
+    state = {
+        timeToPush: {
+            hours_to_push: "",
+            days_to_push: ""
+        }
+    }
 
     completeTask = e => {
         e.preventDefault();
         this.props.completeTask(this.props.todo.id);
     }
 
+    hideTask = e => {
+        e.preventDefault();
+        this.props.hideTask(this.props.todo.id);
+    }
+
     render() {
-        let thirdwidth = {
-            width: '33%'
+        let halfwidth = {
+            width: '50%'
         }
+
         return (
             <TaskDiv>
                 <TaskText>{this.props.todo.task}</TaskText>
-                {/* <button class="btn btn-secondary" onClick={this.completeTask}>Complete</button> */}
+                <TaskText>{moment(this.props.todo.next_update_date).fromNow()}</TaskText>
+                <PushTask taskID={this.props.todo.id} />
                 <TaskButtonsDiv>
-                        <button class="btn btn-secondary" style={thirdwidth}>✓</button>
-                        <button class="btn btn-secondary" style={thirdwidth}>++</button>
-                        <button class="btn btn-secondary" style={thirdwidth}>edit</button>
+                    <button className="btn btn-secondary" style={halfwidth}>Hide</button>
+                    <button className="btn btn-secondary" style={halfwidth}>Complete</button>
                 </TaskButtonsDiv>
             </TaskDiv>
         )

@@ -5,10 +5,12 @@ import ToDoItem from './ToDoItem';
 import { addTask } from '../Actions'
 
 import styled from 'styled-components'
+import AddTask from './AddTask';
+import moment from 'moment';
 
-const WideDiv = styled.div`
-    width: 300px;
-`
+const ButtonRow = styled.div`
+    padding: 5px 0px;
+    `
 
 class ToDoList extends React.Component {
     state = {
@@ -26,33 +28,34 @@ class ToDoList extends React.Component {
     handleChanges = e => this.setState({ newTask: e.target.value });
 
     render() {
-        // console.log(this.props)
-        // console.log("todolist object", this.props.toDoList)
-        const uncompletedToDoList = this.props.toDoList.filter(todo => todo.completed === false);
-        // const completedToDoList = this.props.toDoList.filter(todo => todo.completed === true);
+        let thirdwidth = {
+            width: '33%'
+        }
+
+        const listToShow = this.props.toDoList.filter(
+            todo => todo.completed === false).filter(
+                todo => todo.hidden === false);
+        const sortedListToShow = listToShow.sort((a,b) => 
+            moment(a.next_update_date).format("X") - moment(b.next_update_date).format("X"))
+
         return (
             <div>
                 <h2>NotToday</h2>
-                {/* <form onSubmit={this.addTask}>
-                    <input onChange={this.handleChanges} value={this.state.newTask} />
-                    <button>Add Task</button>
-                </form> */}
-                <WideDiv>
-                <button class="btn btn-primary">Add Task</button>
-                </WideDiv>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                        Active
-                    </label>
-                    <label class="btn btn-primary">
-                            Radio
-                    </label>
-                    <label class="btn btn-primary">
-                            Radio
-                    </label>
-                </div>
-                <h4>stuff</h4>
-                {uncompletedToDoList.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
+                <AddTask />
+                <h4>View options</h4>
+                <ButtonRow>
+                    <button className="btn btn-outline-primary" style={thirdwidth}>
+                        Next Five
+                    </button>
+                    <button className="btn btn-outline-primary" style={thirdwidth}>
+                        Next Twenty
+                    </button>
+                    <button className="btn btn-outline-primary" style={thirdwidth}>
+                        All
+                    </button>
+                </ButtonRow>
+                <h4>Tasks</h4>
+                {sortedListToShow.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
             </div>
         )
     }
